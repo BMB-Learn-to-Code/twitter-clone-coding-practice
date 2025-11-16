@@ -11,6 +11,7 @@ func main() {
 		config: cfg,
 	}
 
-	log.Panic(app.Run())
+	mux := app.Mount()
 
+	log.Panic(app.Run(mux))
 }
