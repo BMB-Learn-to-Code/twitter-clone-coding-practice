@@ -1,10 +1,14 @@
 package main
 
-import "log"
+import (
+	"log"
+
+	"github.com/BMB-Learn-to-Code/twitter-clone-coding-practice/internal/env"
+)
 
 func main() {
 	cfg := config{
-		addr: ":8080",
+		addr: env.GetString("PORT", ":8081"),
 	}
 
 	app := &application{
