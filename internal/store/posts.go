@@ -21,6 +21,7 @@ type Post struct {
 	UpdatedAt string   `json:"updated_at"`
 }
 
+// Create inserts a new post into the database and returns the generated ID, creation timestamp, and update timestamp.
 func (s *PostStore) Create(ctx context.Context, post *Post) error {
 	query := `
 		INSERT INTO posts (title, content, tags, user_id)
