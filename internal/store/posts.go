@@ -7,7 +7,7 @@ import (
 	"github.com/lib/pq"
 )
 
-type PostsStore struct {
+type PostStore struct {
 	db *sql.DB
 }
 
@@ -21,13 +21,22 @@ type Post struct {
 	UpdatedAt string   `json:"updated_at"`
 }
 
-func (s *PostsStore) Create(ctx context.Context, post *Post) error {
+func (s *PostStore) Create(ctx context.Context, post *Post) error {
 	query := `
 		INSERT INTO posts (title, content, tags, user_id)
 		VALUES ($1, $2, $3, $4)
 		RETURNING id, created_at, updated_at
 	`
-	s.db.QueryContext(ctx, query, post.Title, post.Content, pq.Array(post.Tags), post.UserID)
+	err := s.db.QueryRowContext(ctx, query,
+		post.Title,
+		post.Content,
+		pq.Array(post.Tags),
+		post.UserID,
+	).Scan(&post.ID, &post.CreatedAt, &post.UpdatedAt)
+
+	if err != nil {
+		return err
+	}
 
 	return nil
 }
