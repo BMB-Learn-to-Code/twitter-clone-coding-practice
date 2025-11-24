@@ -22,8 +22,8 @@ type config struct {
 
 type dbConfig struct {
 	addr         string
-	maxOpenConns int
-	maxIdleConns int
+	maxOpenConns uint32
+	maxIdleConns uint32
 	maxIdleTime  string
 }
 
