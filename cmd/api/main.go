@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 
+	"github.com/BMB-Learn-to-Code/twitter-clone-coding-practice/internal/db"
 	"github.com/BMB-Learn-to-Code/twitter-clone-coding-practice/internal/env"
 	"github.com/BMB-Learn-to-Code/twitter-clone-coding-practice/internal/store"
 )
@@ -18,7 +19,18 @@ func main() {
 		},
 	}
 
-	store := store.NewStorage(nil)
+	db, err := db.New(
+		cfg.db.addr,
+		cfg.db.maxOpenConns,
+		cfg.db.maxIdleConns,
+		cfg.db.maxIdleTime,
+	)
+	if err != nil {
+		log.Panic(err)
+	}
+	defer db.Close()
+
+	store := store.NewStorage(db)
 
 	app := &application{
 		config: cfg,
