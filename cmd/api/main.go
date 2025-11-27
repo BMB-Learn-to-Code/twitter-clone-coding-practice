@@ -29,7 +29,7 @@ func main() {
 		log.Panic(err)
 	}
 	defer db.Close()
-	log.Print("database connection pool established")
+	log.Print("the database connection pool established")
 
 	store := store.NewStorage(db)
 
