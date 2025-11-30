@@ -15,7 +15,7 @@ type CreatePostPayload struct {
 func (app *application) createPostHandler(w http.ResponseWriter, r *http.Request) {
 	var postPayload CreatePostPayload
 
-	if err := readJSON(w, r, postPayload); err != nil {
+	if err := readJSON(w, r, &postPayload); err != nil {
 		writeJSONError(w, http.StatusBadRequest, fmt.Sprintf("it was not possible to parse the request body: %v", error.Error(err)))
 		return
 	}

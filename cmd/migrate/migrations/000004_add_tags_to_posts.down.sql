@@ -1,0 +1,3 @@
+ALTER TABLE IF EXISTS posts
+DROP COLUMN tags,
+DROP COLUMN updated_at;
