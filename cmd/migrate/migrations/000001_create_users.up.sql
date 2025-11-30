@@ -1,8 +1,8 @@
 CREATE TABLE IF NOT EXISTS users(
-    id bigserial PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     email citext UNIQUE NOT NUll,
-    username varchar(255) UNIQUE NOT NULL,
-    password bytea NOT NULL,
-    created_at timestamp(0) with time zone NOT NULL DEFAULT NOW(),
-    updated_at timestamp(0) with time zone NOT NULL DEFAULT NOW()
+    username VARCHAR(255) UNIQUE NOT NULL,
+    password BYTEA NOT NULL,
+    created_at TIMESTAMP(0) WITH Time ZONE NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMP(0) WITH TIME ZONE NOT NULL DEFAULT NOW()
 );
