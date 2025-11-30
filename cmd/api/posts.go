@@ -13,20 +13,28 @@ type CreatePostPayload struct {
 }
 
 func (app *application) createPostHandler(w http.ResponseWriter, r *http.Request) {
-	ctx := r.Context()
-	var post store.Post
 	var postPayload CreatePostPayload
-
-	userId := 1
 
 	if err := readJSON(w, r, postPayload); err != nil {
 		writeJSONError(w, http.StatusBadRequest, fmt.Sprintf("it was not possible to parse the request body: %v", error.Error(err)))
 		return
 	}
 
-	post.UserID = int64(userId)
-	post.Title = postPayload.Title
-	post.Content = postPayload.Content
+	post := &store.Post{
+		Title:   postPayload.Title,
+		Content: postPayload.Content,
+		// TODO: Implmement Auth to get the correct User id
+		UserID: 1,
+	}
 
-	app.store.Posts.Create(ctx, &post)
+	ctx := r.Context()
+
+	if err := app.store.Posts.Create(ctx, post); err != nil {
+		writeJSONError(w, http.StatusInternalServerError, fmt.Sprintf("it was not possible to create the post: %v", error.Error(err)))
+		return
+	}
+	if err := writeJSON(w, http.StatusCreated, post); err != nil {
+		writeJSONError(w, http.StatusInternalServerError, fmt.Sprintf("it was not possible to write the response: %v", error.Error(err)))
+		return
+	}
 }
