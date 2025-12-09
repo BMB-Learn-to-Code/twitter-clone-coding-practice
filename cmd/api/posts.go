@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -53,7 +54,13 @@ func (app *application) getPostHandler(w http.ResponseWriter, r *http.Request) {
 
 	post, err := app.store.Posts.GetPostById(ctx, id)
 	if err != nil {
-		writeJSONError(w, http.StatusInternalServerError, fmt.Sprintf("it was not possible to get the post: %v", error.Error(err)))
+		switch {
+		case errors.Is(err, store.ErrorNotFound):
+			writeJSONError(w, http.StatusNotFound, "post not found")
+			return
+		default:
+			writeJSONError(w, http.StatusInternalServerError, fmt.Sprintf("it was not possible to get the post: %v", error.Error(err)))
+		}
 	}
 
 	writeJSON(w, http.StatusOK, post)
