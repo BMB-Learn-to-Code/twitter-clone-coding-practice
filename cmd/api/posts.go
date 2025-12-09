@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/BMB-Learn-to-Code/twitter-clone-coding-practice/internal/store"
 	"github.com/go-chi/chi/v5"
@@ -43,11 +44,17 @@ func (app *application) createPostHandler(w http.ResponseWriter, r *http.Request
 func (app *application) getPostHandler(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
-	id := chi.URLParam(r, "id")
+	postId := chi.URLParam(r, "id")
+	id, err := strconv.ParseInt(postId, 10, 64)
+	if err != nil {
+		writeJSONError(w, http.StatusBadRequest, fmt.Sprintf("invalid post id: %v", error.Error(err)))
+		return
+	}
 
-	post, err := app.store.Posts.FindPostById(ctx, id)
+	post, err := app.store.Posts.GetPostById(ctx, id)
 	if err != nil {
 		writeJSONError(w, http.StatusInternalServerError, fmt.Sprintf("it was not possible to get the post: %v", error.Error(err)))
 	}
 
+	writeJSON(w, http.StatusOK, post)
 }
