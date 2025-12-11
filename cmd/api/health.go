@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 )
@@ -14,7 +13,7 @@ func (app *application) healthCheckHandler(w http.ResponseWriter, r *http.Reques
 	}
 	if err := writeJSON(w, http.StatusOK, data); err != nil {
 		log.Println(err)
-		writeJSONError(w, http.StatusInternalServerError, fmt.Sprintf("error writing JSON response: %v", err))
+		app.internalServerError(w, r, err)
 		return
 	}
 }

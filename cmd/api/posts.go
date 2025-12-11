@@ -33,11 +33,11 @@ func (app *application) createPostHandler(w http.ResponseWriter, r *http.Request
 	ctx := r.Context()
 
 	if err := app.store.Posts.Create(ctx, post); err != nil {
-		writeJSONError(w, http.StatusInternalServerError, fmt.Sprintf("it was not possible to create the post: %v", error.Error(err)))
+		app.internalServerError(w, r, err)
 		return
 	}
 	if err := writeJSON(w, http.StatusCreated, post); err != nil {
-		writeJSONError(w, http.StatusInternalServerError, fmt.Sprintf("it was not possible to write the response: %v", error.Error(err)))
+		app.internalServerError(w, r, err)
 		return
 	}
 }
@@ -59,7 +59,7 @@ func (app *application) getPostHandler(w http.ResponseWriter, r *http.Request) {
 			writeJSONError(w, http.StatusNotFound, "post not found")
 			return
 		default:
-			writeJSONError(w, http.StatusInternalServerError, fmt.Sprintf("it was not possible to get the post: %v", error.Error(err)))
+			app.internalServerError(w, r, err)
 		}
 	}
 
