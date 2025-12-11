@@ -34,8 +34,10 @@ func (a *application) Mount() http.Handler {
 	r.Use(middleware.Logger)
 	r.Route("/v1", func(r chi.Router) {
 		r.Get("/health", a.healthCheckHandler)
-		r.Post("/posts", a.createPostHandler)
-		r.Get("/posts/{id}", a.getPostHandler)
+		r.Route("/posts", func(r chi.Router) {
+			r.Post("/", a.createPostHandler)
+			r.Get("/{id}", a.getPostHandler)
+		})
 	})
 
 	return r
