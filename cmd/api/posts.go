@@ -52,7 +52,7 @@ func (app *application) getPostHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	post, err := app.store.Posts.GetPostById(ctx, id)
+	post, err := app.store.Posts.GetById(ctx, id)
 	if err != nil {
 		switch {
 		case errors.Is(err, store.ErrorNotFound):
