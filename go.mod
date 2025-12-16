@@ -1,7 +1,8 @@
-module github.com/BMB-Learn-to-Code/twitter-clone-coding-practice
+module twitter-clone-coding-practice
 
-go 1.25.3
+go 1.25
 
-require github.com/go-chi/chi/v5 v5.2.3
-
-require github.com/lib/pq v1.10.9
+require (
+	github.com/go-chi/chi/v5 v5.2.3
+	github.com/lib/pq v1.10.9
+)

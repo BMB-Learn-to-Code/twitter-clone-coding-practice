@@ -2,10 +2,9 @@ package main
 
 import (
 	"log"
-
-	"github.com/BMB-Learn-to-Code/twitter-clone-coding-practice/internal/db"
-	"github.com/BMB-Learn-to-Code/twitter-clone-coding-practice/internal/env"
-	"github.com/BMB-Learn-to-Code/twitter-clone-coding-practice/internal/store"
+	"twitter-clone-coding-practice/internal/db"
+	"twitter-clone-coding-practice/internal/env"
+	"twitter-clone-coding-practice/internal/store"
 )
 
 func main() {

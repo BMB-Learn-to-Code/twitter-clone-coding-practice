@@ -4,8 +4,8 @@ import (
 	"log"
 	"net/http"
 	"time"
+	"twitter-clone-coding-practice/internal/store"
 
-	"github.com/BMB-Learn-to-Code/twitter-clone-coding-practice/internal/store"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 )

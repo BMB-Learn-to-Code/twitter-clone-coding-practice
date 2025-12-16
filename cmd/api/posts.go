@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"twitter-clone-coding-practice/internal/store"
 
-	"github.com/BMB-Learn-to-Code/twitter-clone-coding-practice/internal/store"
 	"github.com/go-chi/chi/v5"
 )
 
